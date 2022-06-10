@@ -53,7 +53,9 @@ def fmt6parser(fmt6):
             s_s = parts[col_labels.index('sstart')]
             s_e = parts[col_labels.index('semd')]
             # populate buckets
-            sids.append(sid)
+            if sid not in hsp_bucket:
+                # `not in sids` will do the same.  I followed original pl code.
+                sids.append(sid)
             hsp_bucket[sid].append((q_s, q_e, s_s, s_e, p_i))
             hsp_count += 1
 
@@ -63,8 +65,31 @@ def fmt6parser(fmt6):
 def mainStory():
     # get fmt6 file path
     fmt6 = sys.argv[1]
+    # parse hit info from fmt6
     query, sids, hsp_bucket, hsp_count = fmt6parser(fmt6)
-    #
+    # graph parameter setup
+    LEFT, BODY, RIGHT = (150, 550, 50)
+    HEADER_H, FOOTER_H = (40, 20)
+    LINE_W, HSP_SEP, SUBJ_SEP = (3, 14, 18)
+    # drawing canvas size
+    v_size = HEADER_H + FOOTER_H + (HSP_SEP * hsp_count)
+    v_size += (SUBJ_SEP * len(hsp_bucket.keys()))
+    if v_size < 100:  # floor
+        v_size = 100
+    if v_size > 4000:  # ceiling
+        v_size = 4000
+    h_size = sum(LEFT, BODY, RIGHT)
+    q_s_min = min([t[0] for t in hsp_bucket.values()])
+    q_e_max = max([t[1] for t in hsp_bucket.values()])
+    scale = BODY / (q_e_max - q_s_min + 1)
+    # colors
+    
+
+    # header part
+    # percent identity
+    # alignments
+    # alignments depth in the header
+
 
 
 
