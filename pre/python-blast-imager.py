@@ -64,7 +64,7 @@ def mainStory():
     # get fmt6 file path
     fmt6 = sys.argv[1]
     query, sids, hsp_bucket, hsp_count = fmt6parser(fmt6)
-    
+    #
 
 
 
